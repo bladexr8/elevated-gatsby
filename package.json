@@ -1,0 +1,29 @@
+{
+  "name": "elevated-gatsby",
+  "version": "1.0.0",
+  "description": "Code from Packt Gatsby Book - https://github.com/PacktPublishing/Elevating-React-Web-Development-with-Gatsby-4",
+  "main": "index.js",
+  "scripts": {
+    "build": "gatsby build",
+    "develop": "gatsby develop",
+    "start": "npm run develop",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bladexr8/elevated-gatsby.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "gatsby": "^4.4.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "bugs": {
+    "url": "https://github.com/bladexr8/elevated-gatsby/issues"
+  },
+  "homepage": "https://github.com/bladexr8/elevated-gatsby#readme"
+}
