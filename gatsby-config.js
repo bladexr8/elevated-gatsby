@@ -3,5 +3,7 @@
 // and offline support 
 
 module.exports = {
-  plugins: [],
+  plugins: [
+    'gatsby-plugin-postcss'
+  ],
 }
