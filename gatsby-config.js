@@ -2,6 +2,8 @@
 // can contain plugins, metadata, styling
 // and offline support 
 
+require("dotenv").config()
+
 module.exports = {
   siteMetadata: {
     siteUrl: 'https://your.website',
@@ -22,6 +24,13 @@ module.exports = {
       options: {
         name: 'markdown-bio',
         path: `${__dirname}/MD`
+      }
+    },
+    'gatsby-plugin-image',
+    {
+      resolve: 'gatsby-source-graphcms',
+      options: {
+        endpoint: process.env.GRAPHCMS_ENDPOINT,
       }
     },
     'gatsby-plugin-mdx',
