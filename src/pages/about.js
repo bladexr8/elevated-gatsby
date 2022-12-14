@@ -1,18 +1,28 @@
-import { navigate } from "gatsby"
+import { navigate, graphql } from "gatsby"
 import React from "react"
 import Layout from "../components/layout/Layout"
+import { MDXRenderer } from "gatsby-plugin-mdx"
 
 // alternate programmatic navigation
 
-const About = () => {
+const About = ({ data }) => {
   const triggerNavigation = () => {
     navigate('/')
   }
+
+  // bio content from data prop
+  const {
+    mdx: { body },
+    graphCmsIcebreaker: { hobbies },
+  } = data
+
   return (
     <Layout>
       <div className="max-w-5xl mx-auto py-16 lg:py-24 text-center">
-        <h1 className="text-4xl md:text-6xl font-bold text-black pb-4">My About Page</h1>
-        <p className="mb-6">This is my about page</p>
+        <MDXRenderer>{body}</MDXRenderer>
+        <h2>Hobbies</h2>
+        {hobbies.join(", ")}
+        <br />
         <button className="btn" onClick={() => triggerNavigation()}>
           Return to Home Page
         </button>
@@ -22,3 +32,15 @@ const About = () => {
 }
 
 export default About
+
+// graphql query to populate data prop
+export const query = graphql`
+  {
+    mdx(frontmatter: { type: { eq: "bio" }}) {
+      body
+    }
+    graphCmsIcebreaker {
+      hobbies
+    }
+  }
+`
