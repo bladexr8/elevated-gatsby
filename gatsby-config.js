@@ -13,10 +13,18 @@ module.exports = {
     {
       resolve: 'gatsby-source-filesystem',
       options: {
+        name: 'mdx-bio',
+        path: `${__dirname}/MDX`
+      }
+    },
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
         name: 'markdown-bio',
         path: `${__dirname}/MD`
       }
     },
+    'gatsby-plugin-mdx',
     'gatsby-transformer-remark',
     'gatsby-plugin-postcss'
   ],
