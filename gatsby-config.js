@@ -10,6 +10,14 @@ module.exports = {
     bio: 'My short bio that I will use to introduce myself'
   },
   plugins: [
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'markdown-bio',
+        path: `${__dirname}/MD`
+      }
+    },
+    'gatsby-transformer-remark',
     'gatsby-plugin-postcss'
   ],
 }
