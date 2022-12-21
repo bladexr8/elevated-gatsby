@@ -7,6 +7,7 @@ const path = require('path');
 exports.createPages = async ({ actions, graphql, reporter}) => {
     const { createPage } = actions;
     const BlogPostTemplate = path.resolve('./src/templates/blog-page.js');
+    const BlogPreviewTemplate = path.resolve('./src/templates/blog-preview.js');
     const BlogPostQuery = await graphql(`    
         {
             allMarkdownRemark(filter: { frontmatter: { type: { eq: "Blog" }}}) {
