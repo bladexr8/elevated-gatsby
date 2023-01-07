@@ -44,7 +44,7 @@ const Footer = () => {
       </div>
 
       <div className="flex items-center">
-        <p>Your name here.</p>
+        <p>&copy; 2023 Peter Parker.</p>
       </div>
     </div>
     </footer>

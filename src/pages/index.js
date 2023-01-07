@@ -18,6 +18,8 @@ const Index = ({ data }) => {
         <h1 className="text-4xl md:text-6xl font-bold text-black pb-4">{name}</h1>
         <p className="mb-4">{role}</p>
         <Link to="/about" className="btn">About me</Link>
+        &nbsp;
+        <Link to="/blog" className="btn">My Blog</Link>
       </div>
     </Layout>
   )

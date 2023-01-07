@@ -4,10 +4,15 @@
  * Create Blog Post Pages Dynamically
  */
 const path = require('path');
+const _ = require('lodash');
 exports.createPages = async ({ actions, graphql, reporter}) => {
     const { createPage } = actions;
     const BlogPostTemplate = path.resolve('./src/templates/blog-page.js');
     const BlogPreviewTemplate = path.resolve('./src/templates/blog-preview.js');
+    const TagsTemplate = path.resolve('./src/templates/tags.js');
+    
+    // generate blog post pages
+    console.log('Generating Blog Post Pages...');
     const BlogPostQuery = await graphql(`    
         {
             allMarkdownRemark(filter: { frontmatter: { type: { eq: "Blog" }}}) {
@@ -17,6 +22,12 @@ exports.createPages = async ({ actions, graphql, reporter}) => {
                     }
                 }
             }
+
+            tagsGroup: allMarkdownRemark(filter: { frontmatter: { type: { eq: "Blog" }}}) {
+                group(field: frontmatter___tags) {
+                    tag: fieldValue
+                }
+            } 
         }
     `);
     if (BlogPostQuery.errors) {
@@ -24,11 +35,45 @@ exports.createPages = async ({ actions, graphql, reporter}) => {
         return;
     }
     BlogPostQuery.data.allMarkdownRemark.nodes.forEach(({ fields: { slug }}) => {
+        console.log(`-> Generating ${slug}...`);
         createPage({
             path: `blog${slug}`,
             component: BlogPostTemplate,
             context: {
                 slug: slug
+            }
+        });
+    });
+
+    // generate blog post preview pages
+    console.log('Generating Blog Post Preview Pages...');
+    const BlogPosts = BlogPostQuery.data.allMarkdownRemark.nodes;
+    const postsPerPage = 6;
+    const numPages = Math.ceil(BlogPosts.length / postsPerPage);
+    Array.from({ length: numPages}).forEach((_, i) => {
+        console.log(`-> Generating ${i === 0 ? '/blog' : `/blog/${i + 1}`}...`);
+        createPage({
+            path: i === 0 ? '/blog' : `/blog/${i + 1}`,
+            component: BlogPreviewTemplate,
+            context: {
+                limit:  postsPerPage,
+                skip: i * postsPerPage,
+                numPages,
+                currentPage: i + 1,
+                slug: i === 0 ? '/blog' : `/blog/${i + 1}`,
+            }
+        });
+    });
+
+    // create tag group pages
+    console.log('Generating Blog Post Tag Group Pages...');
+    BlogPostQuery.data.tagsGroup.group.forEach((group) => {
+        console.log(`-> Generating tags/${_.kebabCase(group.tag)}/...`);
+        createPage({
+            path: `tags/${_.kebabCase(group.tag)}/`,
+            component: TagsTemplate,
+            context: {
+                tag: group.tag
             }
         });
     });

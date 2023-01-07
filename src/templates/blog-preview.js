@@ -24,14 +24,14 @@ const BlogPreview = ({pageContext, data}) => {
                 fields: { slug }
               }) => (
                 <div>
-                  <GatsbyLink to={`/blog${slug}`}>
+                  <Link to={`/blog${slug}`}>
                     <h2 className="text-2xl font-medium">{title}</h2>
                     <div className="flex items-center space-x-2">
                       <p className="text-lg opacity-50">{date.split("T")[0]}</p>
                       <TagList tags={tags}/>
                     </div>
                     <p>{desc}</p>
-                  </GatsbyLink>
+                  </Link>
                 </div>
               )
             )}
